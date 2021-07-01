@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Flight Number</th>
+        <th scope="col">Airline Name</th>
+        <th scope="col">Logo</th>
+        <th scope="col">Departure and Arrival Time</th>
+        <th scope="col">Duration</th>
+        <th scope="col">No. Of Stops.</th>
+        <th scope="col">Price</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let flight of flights | paginate: { itemsPerPage: itemsPerPage, currentPage: page, totalItems: totalCount }; let i =index">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{flight.flight_number}}</td>
+        <td>{{flight.airline_name}}</td>
+        <td><img class="rounded-circle" [src]="flight.logo" width="150" height="118"></td>
+        <td>4:00|5:00</td>
+        <td>{{flight.duration}}</td>
+        <td>{{flight.noofstops}}</td>
+        <td>{{flight.price}}</td>
+        <td><button type="button" (click)="OnClickBookNow(flight)" class="btn btn-success">Book Now</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="OnPageChange($event)"></pagination-controls>
+
+</div>

@@ -1,0 +1,74 @@
+<form #flightSearchForm="ngForm" (ngSubmit)="flightSearchForm.form.valid && onSubmit(flightSearchForm)">
+    <fieldset class="row mb-3">
+        <div class="col-sm-10">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" checked type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    value="option1">
+                <label class="form-check-label" for="inlineRadio1">ONE WAY</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <fa-icon [icon]="faCoffee"></fa-icon>
+                <input class="form-check-input " type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    value="option2">
+                <label class="form-check-label " for="inlineRadio2">Round TRIP</label>
+            </div>
+        </div>
+    </fieldset>
+    <div class="row mb-3 form-group">
+        <label for="fromCity" class="col-sm-2 col-form-label col-form-label-lg">From</label>
+        <div class="ng-autocomplete ">
+            <ng-autocomplete id="fromCity" [data]="cities" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate" name="fromCity" 
+                 [(ngModel)]="fromCity" #fromCity_ref="ngModel" [ngClass]="{ 'is-invalid': flightSearchForm.submitted && fromCity_ref.invalid }" required="true">
+            </ng-autocomplete>
+            <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.city"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+            </ng-template>
+            <div *ngIf="flightSearchForm.submitted && fromCity_ref.invalid" class="invalid-feedback">
+                <div *ngIf="fromCity_ref.errors.required">From City is required</div>
+            </div>
+        </div>
+        <div class="row mb-3 form-group">
+            <label for="toCity" class="col-sm-2 col-form-label col-form-label-lg">To</label>
+            <div class="ng-autocomplete ">
+                <ng-autocomplete id="toCity" [data]="cities" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                    [itemTemplate]="itemTemplate"   [notFoundTemplate]="notFoundTemplate"
+                    [(ngModel)]="toCity" name="toCity" #toCity_ref="ngModel" [ngClass]="{ 'is-invalid': flightSearchForm.submitted && toCity_ref.invalid }" required="true">
+                </ng-autocomplete>
+                <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.city"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+
+                <div *ngIf="flightSearchForm.submitted && toCity_ref.invalid" class="invalid-feedback">
+                    <div *ngIf="toCity_ref.errors.required">To City is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="travelDate" class="col-sm-2 col-form-label col-form-label-lg">Travel Date</label>
+            <div class="col-sm-8">
+                <input type="date" class="form-control" id="travelDate" #travelDate_ref="ngModel" name="travelDate" [(ngModel)]="travelDate" [ngClass]="{ 'is-invalid': flightSearchForm.submitted && travelDate_ref.invalid }" required>
+                <div *ngIf="flightSearchForm.submitted && travelDate_ref.invalid" class="invalid-feedback">
+                    <div *ngIf="travelDate_ref.errors.required">Travel date is required</div>
+                </div>
+            </div>    
+        </div>
+        <div class="row mb-3">
+            <label for="returnDate" class="col-sm-2 col-form-label col-form-label-lg">Return Date</label>
+            <div class="col-sm-8">
+                <input type="date" class="form-control" id="returnDate" name="returnDate" [(ngModel)]="returnDate">
+            </div>
+        </div>
+    </div>
+<button type="submit" class="btn btn-primary">Search Flight</button>
+</form>

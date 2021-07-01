@@ -1,0 +1,58 @@
+<div class="container">
+    <form #flightBookForm="ngForm" (ngSubmit)="flightBookForm.form.valid &&  onSubmit(flightBookForm)">
+        <h2>Book Now </h2>
+        <h3><b>{{flight.airline_name}}</b>({{flight.flight_number}})</h3>
+        <h3>{{flight.fromCity}} => {{flight.toCity}}</h3>
+        <h3>on {{flight.travelDate}} @ Rs. {{flight.price}}</h3>
+        <div class="form-group ">
+            <div class="row">
+                <div class="col-sm-6"><input type="text" id="first_name" class="form-control" name="first_name"
+                        placeholder="First Name" required="required" [(ngModel)]="first_name" #first_name_ref="ngModel"
+                        [ngClass]="{ 'is-invalid': flightBookForm.submitted && first_name_ref.invalid }">
+
+                    <div *ngIf="flightBookForm.submitted && first_name_ref.invalid" class="invalid-feedback">
+                        <div *ngIf="first_name_ref.errors.required">First Name is required</div>
+                    </div>
+                </div>
+                <div class="col-sm-6"><input type="text" class="form-control" name="last_name" placeholder="Last Name"
+                        required="required" [(ngModel)]="last_name" #last_name_ref="ngModel"
+                        [ngClass]="{ 'is-invalid': flightBookForm.submitted && last_name_ref.invalid }">
+
+                    <div *ngIf="flightBookForm.submitted && last_name_ref.invalid" class="invalid-feedback">
+                        <div *ngIf="last_name_ref.errors.required">Last Name is required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row mt-2">
+                <input email="true" class="form-control" name="email" placeholder="Email" required="required"
+                    [ngClass]="{ 'is-invalid': flightBookForm.submitted && email_ref.invalid }" [(ngModel)]="email"
+                    #email_ref="ngModel">
+                <div *ngIf="flightBookForm.submitted && email_ref.invalid" class="invalid-feedback">
+                    <div *ngIf="email_ref.errors?.email">Valid Email is required</div>
+                    <div *ngIf="email_ref.errors.required">Email is required</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="row mt-2">
+                <input type="text" class="form-control" name="phone" placeholder="Phone Number" required="required"
+                    [(ngModel)]="phone" #phone_ref="ngModel" pattern="^((\\+91-?)|0)?[0-9]{10}$"
+                    [ngClass]="{ 'is-invalid': flightBookForm.submitted && phone_ref.invalid }">
+
+                <div *ngIf="flightBookForm.submitted && phone_ref.invalid" class="invalid-feedback">
+                    <div *ngIf="phone_ref.errors.pattern">Please, Enter 10 digit Mobile Number.</div>
+                    <div *ngIf="phone_ref.errors.required">Phone is required</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group mb-3">
+            <div class="row mt-2">
+                <button type="submit" class="btn btn-success btn-lg btn-block">Confirm Book</button>
+            </div>
+        </div>
+    </form>
+</div>
